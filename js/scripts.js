@@ -12,20 +12,19 @@ function convertBase(input, baseFrom, baseTo) {
   }
 }
 
-input1.addEventListener('input', function () {
+function updateInputs(input1, input2, select1, select2) {
   if (input1.value) {
-    const result = convertBase(input1.value, input1Select.value, input2Select.value);
-    input2.value = !isNaN(result) ? result : 'Invalid conversion';
+    const value = !Number.isNaN(Number(input1.value)) ? Number(input1.value) : input1.value;
+    const result = convertBase(value, select1.value, select2.value);
+    input2.value = result != 'NaN' ? result : 'Invalid conversion';
   } else {
     input2.value = '';
   }
-});
+}
 
-input2.addEventListener('input', function () {
-  if (input2.value) {
-    const result = convertBase(input2.value, input2Select.value, input1Select.value);
-    input1.value = !isNaN(result) ? result : 'Invalid conversion';
-  } else {
-    input1.value = '';
-  }
+input1.addEventListener('input', () => {
+  updateInputs(input1, input2, input1Select, input2Select);
+});
+input2.addEventListener('input', () => {
+  updateInputs(input2, input1, input2Select, input1Select);
 });
